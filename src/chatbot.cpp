@@ -49,9 +49,10 @@ ChatBot::ChatBot(const ChatBot& source) {
     printf("Copy Constructor Called! \n");
     _image = new wxBitmap();
     *_image = *source._image;
+    
     _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
-    _currentNode = source._currentNode;
 }
 
 ChatBot& ChatBot::operator= (const ChatBot &source) {
@@ -61,12 +62,15 @@ ChatBot& ChatBot::operator= (const ChatBot &source) {
         return *this;
     }
 
-    delete _image;
+    if(_image) {
+        delete _image;
+    }
+
     _image = new wxBitmap();
     *_image = *source._image;
     _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
-    _currentNode = source._currentNode;
 
     return *this;
 }
@@ -75,14 +79,15 @@ ChatBot::ChatBot(ChatBot&& source) {
     printf("Move Constructor Called! \n");
     _image = source._image;
     _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
-    _currentNode = source._currentNode;
 
     source._chatLogic = nullptr;
-    source._currentNode = nullptr;
-    source._rootNode = nullptr;
     source._image = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
 }
+
 
 ChatBot& ChatBot::operator= (ChatBot&& source) {
     printf("Overloaded move assignment operator called! \n");
@@ -91,17 +96,20 @@ ChatBot& ChatBot::operator= (ChatBot&& source) {
         return *this;
     }
 
-    delete _image;
+    if(this->_image) {
+        delete _image;
+    }
+
     _image = source._image;
     _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
-    _currentNode = source._currentNode;
 
     source._chatLogic = nullptr;
+    source._image = nullptr;
     source._currentNode = nullptr;
     source._rootNode = nullptr;
-    source._image = nullptr;
-
+    
     return *this;
 }
 
