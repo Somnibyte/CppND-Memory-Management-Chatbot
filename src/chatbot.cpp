@@ -12,7 +12,7 @@
 ChatBot::ChatBot()
 {
     // invalidate data handles
-    _image = nullptr;
+    _image = NULL;
     _chatLogic = nullptr;
     _rootNode = nullptr;
 }
@@ -46,7 +46,7 @@ ChatBot::~ChatBot()
 ////
 
 ChatBot::ChatBot(const ChatBot& source) {
-    printf("Copy Constructor Called! \n");
+    printf("ChatBot Constructor \n");
     _image = new wxBitmap();
     *_image = *source._image;
     
@@ -56,7 +56,7 @@ ChatBot::ChatBot(const ChatBot& source) {
 }
 
 ChatBot& ChatBot::operator= (const ChatBot &source) {
-    printf("Overloaded assignment operator called! \n");
+    printf("ChatBot Assignment Operator\n");
     
     if(this == &source) {
         return *this;
@@ -64,6 +64,7 @@ ChatBot& ChatBot::operator= (const ChatBot &source) {
 
     if(_image) {
         delete _image;
+        _image = NULL;
     }
 
     _image = new wxBitmap();
@@ -76,21 +77,21 @@ ChatBot& ChatBot::operator= (const ChatBot &source) {
 }
 
 ChatBot::ChatBot(ChatBot&& source) {
-    printf("Move Constructor Called! \n");
+    printf("ChatBot Move Constructor\n");
     _image = source._image;
     _chatLogic = source._chatLogic;
     _chatLogic->SetChatbotHandle(this);
     _rootNode = source._rootNode;
 
     source._chatLogic = nullptr;
-    source._image = nullptr;
+    source._image = NULL;
     source._rootNode = nullptr;
     source._currentNode = nullptr;
 }
 
 
 ChatBot& ChatBot::operator= (ChatBot&& source) {
-    printf("Overloaded move assignment operator called! \n");
+    printf("ChatBot Move Assignment Operator\n");
     
     if(this == &source) {
         return *this;
@@ -106,7 +107,7 @@ ChatBot& ChatBot::operator= (ChatBot&& source) {
     _rootNode = source._rootNode;
 
     source._chatLogic = nullptr;
-    source._image = nullptr;
+    source._image = NULL;
     source._currentNode = nullptr;
     source._rootNode = nullptr;
     
